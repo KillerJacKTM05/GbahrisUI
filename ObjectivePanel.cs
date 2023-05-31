@@ -7,7 +7,9 @@ using SafeZone;
 public class ObjectivePanel : UIPanels
 {
     [SerializeField] private List<TaskContainer> createdTasks = new List<TaskContainer>();
-    
+
+    public TMP_Text title;
+    public Textbox titleTextBox;
     public override void InitializeThis()
     {
         TaskContainer spawnedNewTask = Instantiate(GameManager.Instance.GetGameSettings().taskContainer);
@@ -19,6 +21,11 @@ public class ObjectivePanel : UIPanels
             ReleaseContent(spawnedNewTask);
         }
         base.InitializeThis();
+    }
+    public override void RewriteMyLanguage()
+    {
+        titleTextBox.RewriteTargetText(title, GameManager.Instance.GetGameLanguage());
+        base.RewriteMyLanguage();
     }
     public void AddTask(RobotTask task)
     {

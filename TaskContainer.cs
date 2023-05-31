@@ -14,6 +14,15 @@ public class TaskContainer : UIPanels
         if(reference != null)
         {
             relatedTask = reference;
+            //for language support. It uses simple scriptable object called text.
+            if (GameManager.Instance.GetGameLanguage() == Language.English)
+            {
+                relatedTask.Description = relatedTask.text.RewriteTargetText(relatedTask.Description, Language.English);
+            }
+            else
+            {
+                relatedTask.Description = relatedTask.text.RewriteTargetText(relatedTask.Description, Language.Turkish);
+            }
             description.text = relatedTask.Description;
             if (relatedTask.urgency)
             {

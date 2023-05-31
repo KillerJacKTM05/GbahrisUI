@@ -18,6 +18,8 @@ public class RobotTask : MonoBehaviour
     [Tooltip("If the quest will affect the environment.")]
     public List<TaskInteractedObject> interactionObject = new List<TaskInteractedObject>();
     public bool activate = false;
+    [Tooltip("This is for language status.")]
+    public Textbox text;
 
     private Transform spawnedCursor;
     private Coroutine waitYourTurn;
@@ -38,6 +40,7 @@ public class RobotTask : MonoBehaviour
             waitYourTurn = StartCoroutine(WaitYourTurnRoutine());
         }
     }
+    //for chain quest links.
     public void CompleteQuestTriggerChain()
     {
         int myPosition = InterfaceManager.Instance.objectivePanelUI.SearchAmongActiveTasks(this);
@@ -70,6 +73,7 @@ public class RobotTask : MonoBehaviour
         InterfaceManager.Instance.objectivePanelUI.UpdateThis(nextQuest, myPosition);
         GameManager.Instance.RemoveAQuestFromTheList(this);
     }
+    //for single quests.
     public void CompleteQuestWithoutChain()
     {
         int myPosition = InterfaceManager.Instance.objectivePanelUI.SearchAmongActiveTasks(this);
@@ -100,6 +104,7 @@ public class RobotTask : MonoBehaviour
         InterfaceManager.Instance.objectivePanelUI.ReleaseContent(myPosition);
         GameManager.Instance.RemoveAQuestFromTheList(this);
     }
+    //removing user interface
     public void Terminate()
     {
         Destroy(spawnedCursor.gameObject);
@@ -113,6 +118,7 @@ public class RobotTask : MonoBehaviour
         Description = "Free Roaming.";
 
     }
+    //it works like GTA quest completion style. There exist a holo for quest area. If user enters to the area, quest will be completed.
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player") && isChainQuest && isActiveNow)
@@ -124,6 +130,8 @@ public class RobotTask : MonoBehaviour
             CompleteQuestWithoutChain();
         }
     }
+
+    //for activation via timing. If don't want to use, select isActiveNow instead.
     private IEnumerator WaitYourTurnRoutine()
     {
         while (true)

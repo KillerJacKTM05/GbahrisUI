@@ -46,6 +46,9 @@ namespace SafeZone
         public InGameUI InGameUI;
         public ObjectivePanel objectivePanelUI;
         public Map mapScript;
+        public Preload preload;
+        public Menupause menupause;
+        public ScenarioEnd scenarioEnd;
 
         private bool objectiveState = true;
         private bool arrowState = true;
@@ -137,6 +140,35 @@ namespace SafeZone
                     SwitchCanvasGroups(m_inGameGroup, m_menuCanvasGroup, 1);
                 }
             }
+        }
+        public void OpenCloseSettings(int state)
+        {
+            switch (state)
+            {
+                case 0:
+                    m_settingsGroup.gameObject.SetActive(false);
+                    break;
+                case 1:
+                    m_settingsGroup.gameObject.SetActive(true);
+                    break;
+            }
+        }
+        public void SetLanguage(int state)
+        {
+            switch (state)
+            {
+                case 0:
+                    GameManager.Instance.SetLanguage(Language.English);
+                    break;
+                case 1:
+                    GameManager.Instance.SetLanguage(Language.Turkish);
+                    break;
+            }
+            //changing language.
+            preload.InitializePReload();
+            objectivePanelUI.RewriteMyLanguage();
+            menupause.RewriteMyLanguage();
+            scenarioEnd.RewriteMyLanguage();
         }
         [Tooltip("If state = 1, it's scenario end. Else, it's for pause screen.")]
         public void ReturnToGame(int state)

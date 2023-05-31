@@ -29,6 +29,10 @@ namespace SafeZone
         {
 
         }
+        public virtual void RewriteMyLanguage()
+        {
+
+        }
     }
 
 }
